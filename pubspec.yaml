@@ -41,6 +41,7 @@ dependencies:
   carousel_slider:
   motion_tab_bar: ^2.0.4
   sqflite: ^2.3.2
+  path:
 
 dev_dependencies:
   flutter_test:
