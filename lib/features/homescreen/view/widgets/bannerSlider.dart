@@ -1,24 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wac_test/features/homescreen/modal/bannerSlider.dart';
 
-class BannerSlider extends StatelessWidget {
-  const BannerSlider({super.key});
+class BannerCarouselSlider extends StatelessWidget {
+  BannerSlider? bannerSlider;
+  BannerCarouselSlider({super.key, required this.bannerSlider});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 200.0,
+        height: 150,
         enlargeCenterPage: true,
         autoPlay: true,
-        aspectRatio: 16 / 9,
+        // aspectRatio: 16 / 9,
         autoPlayCurve: Curves.fastOutSlowIn,
         enableInfiniteScroll: true,
         autoPlayAnimationDuration: Duration(milliseconds: 800),
         viewportFraction: 0.8,
       ),
-      items: images.map((url) {
+      items: bannerSlider?.contents?.map((url) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
@@ -28,8 +30,8 @@ class BannerSlider extends StatelessWidget {
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
-                  image: NetworkImage(url),
-                  fit: BoxFit.cover,
+                  image: NetworkImage(url.imageUrl ?? ""),
+                  fit: BoxFit.fill,
                 ),
               ),
             );

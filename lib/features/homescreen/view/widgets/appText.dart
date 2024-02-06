@@ -6,6 +6,7 @@ class AppText extends StatelessWidget {
   double? fontSize;
   FontWeight? fontWeight;
   TextOverflow? textOverFlow;
+  TextDecoration? textDecoration;
 
   AppText(
       {super.key,
@@ -13,18 +14,21 @@ class AppText extends StatelessWidget {
       this.fontWeight,
       this.fontSize,
       this.textOverFlow,
-      this.textColor});
+      this.textColor,
+      this.textDecoration});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
       style: TextStyle(
-          fontFamily: 'Poppins',
-          color: textColor ?? Colors.black,
-          fontSize: fontSize ?? 15,
-          fontWeight: fontWeight ?? FontWeight.w400,
-          overflow: textOverFlow ?? TextOverflow.ellipsis),
+        fontFamily: 'Poppins',
+        decoration: textDecoration ?? TextDecoration.none,
+        color: textColor ?? Colors.black,
+        fontSize: fontSize ?? 15,
+        fontWeight: fontWeight ?? FontWeight.w400,
+        overflow: textOverFlow ?? TextOverflow.ellipsis,
+      ),
     );
   }
 }

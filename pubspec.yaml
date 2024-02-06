@@ -38,7 +38,9 @@ dependencies:
   provider: ^6.1.1
   http:
   dartz:
-  carousel_slider: 
+  carousel_slider:
+  motion_tab_bar: ^2.0.4
+  sqflite: ^2.3.2
 
 dev_dependencies:
   flutter_test:

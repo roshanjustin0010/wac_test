@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wac_test/features/homescreen/controller/provider/homeScreenProvider.dart';
-import 'package:wac_test/features/homescreen/controller/repositories/homeScreenRepository.dart';
 import 'package:wac_test/features/homescreen/view/widgets/appText.dart';
+import 'package:wac_test/features/homescreen/view/widgets/bannerSlider.dart';
+import 'package:wac_test/features/homescreen/view/widgets/bottomNavigationBar.dart';
+import 'package:wac_test/features/homescreen/view/widgets/categorySection.dart';
 import 'package:wac_test/features/homescreen/view/widgets/customImage.dart';
 import 'package:wac_test/features/homescreen/view/widgets/mostPopular.dart';
 import 'package:wac_test/features/homescreen/view/widgets/spacearoundfield.dart';
@@ -22,9 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var height;
 
   var width;
-  getData() async {
-    context.read<HomeScreenProvider>().getHomeScreenData();
-  }
 
   @override
   void initState() {
@@ -34,27 +33,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
+      context.read<HomeScreenProvider>().getHomeScreenData();
+    });
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.lightGreenAccent,
-          leading: Image.asset(
-            ImageConstants.leadingIcon,
-          ),
-          title: SizedBox(
-            height: 50,
-            child: TextFormField(
-              controller: searchController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-            ),
-          ),
-          actions: const [Icon(Icons.notifications_none)],
+      appBar: AppBar(
+        backgroundColor: Colors.lightGreenAccent,
+        leading: Image.asset(
+          ImageConstants.leadingIcon,
         ),
-        body: Consumer<HomeScreenProvider>(builder: (context, provider, child) {
+        title: SizedBox(
+          height: 50,
+          child: TextFormField(
+            controller: searchController,
+            decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15))),
+          ),
+        ),
+        actions: const [Icon(Icons.notifications_none)],
+      ),
+      body: Consumer<HomeScreenProvider>(
+        builder: (context, provider, child) {
           if (provider.isLoaded == true) {
             return SafeArea(
                 child: Center(
@@ -65,11 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CustomImage(
-                        width: width,
-                        height: 100,
-                        image: ImageConstants.homeScreenImage,
-                        boxFit: BoxFit.cover,
+                      SpaceAroundField(
+                        height: 10,
+                      ),
+                      BannerCarouselSlider(
+                        bannerSlider: provider.bannerSlider,
                       ),
                       SpaceAroundField(
                         height: 20,
@@ -89,6 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             image: provider.adBannerUrl ?? "",
                             boxFit: BoxFit.fill,
                           )),
+                      SpaceAroundField(
+                        height: 20,
+                      ),
+                      CategorySection(
+                          categories: provider.categories, title: 'Categories'),
                       SpaceAroundField(
                         height: 20,
                       ),
@@ -119,6 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ));
           }
-        }));
+        },
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wac_test/features/homescreen/view/widgets/appText.dart';
 import 'package:wac_test/features/homescreen/view/widgets/customImage.dart';
+import 'package:wac_test/features/homescreen/view/widgets/ratingstar.dart';
 import 'package:wac_test/features/homescreen/view/widgets/spacearoundfield.dart';
 
 import '../../modal/productContent.dart';
@@ -11,6 +12,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(productContents?.discount?.split("%").first);
     return Container(
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(5),
@@ -30,8 +32,9 @@ class ProductCard extends StatelessWidget {
               width: 200,
             ),
             SpaceAroundField(height: 2),
-            Center(
-              child: Container(
+            if (int.parse(productContents?.discount!.split('%').first ?? '0') >
+                0)
+              Container(
                 height: 30,
                 width: 100,
                 decoration: BoxDecoration(
@@ -45,17 +48,37 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
             SpaceAroundField(height: 8),
             AppText(
               title: productContents?.productName ?? "",
               fontSize: 15,
               fontWeight: FontWeight.w500,
             ),
-            AppText(
-              title: productContents?.offerPrice ?? "",
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
+            SizedBox(
+              height: 20,
+              child: RatingStar(count: productContents?.productRating),
+            ),
+            Row(
+              children: [
+                AppText(
+                  title: "₹ ${productContents?.offerPrice!.split('â¹').last}",
+                  //text splitted by error text , then take last value
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+                SpaceAroundField(
+                  width: 10,
+                ),
+                if (productContents?.offerPrice != productContents?.actualPrice)
+                  AppText(
+                    title:
+                        "₹ ${productContents?.actualPrice!.split('â¹').last}",
+                    //text splitted by error text , then take last value
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    textDecoration: TextDecoration.lineThrough,
+                  ),
+              ],
             ),
           ],
         ),
