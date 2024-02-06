@@ -1,6 +1,14 @@
 # wac_test
 
-A new Flutter project.
+Clone the project
+
+run
+
+flutter pub get
+
+flutter run
+
+![img.png](img.png)
 
 ## Getting Started
 
