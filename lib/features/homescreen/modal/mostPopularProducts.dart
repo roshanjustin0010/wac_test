@@ -1,12 +1,12 @@
-class HomeScreenData {
+class MostPopularProducts {
   String? type;
   String? title;
   List<Contents>? contents;
   String? id;
 
-  HomeScreenData({this.type, this.title, this.contents, this.id});
+  MostPopularProducts({this.type, this.title, this.contents, this.id});
 
-  HomeScreenData.fromJson(Map<String, dynamic> json) {
+  MostPopularProducts.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     title = json['title'];
     if (json['contents'] != null) {

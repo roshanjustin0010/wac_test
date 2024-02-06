@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wac_test/features/homescreen/controller/provider/homeScreenProvider.dart';
 import 'package:wac_test/features/homescreen/view/homescreen.dart';
 
 void main() {
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: MultiProvider(providers: [
+        ChangeNotifierProvider<HomeScreenProvider>(
+            create: (context) => HomeScreenProvider())
+      ], child: HomeScreen()),
     );
   }
 }
