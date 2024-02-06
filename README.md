@@ -8,7 +8,7 @@ flutter pub get
 
 flutter run
 
-![img.png](img.png)
+
 
 ## Getting Started
 
